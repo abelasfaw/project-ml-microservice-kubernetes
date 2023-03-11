@@ -48,3 +48,12 @@ source .devops/bin/activate
 * Setup and Configure Kubernetes locally
 * Create Flask app in Container
 * Run via kubectl
+
+### File Description
+* app.py code that is responsible for prediction.
+* Dockerfile a file that holds docker image specifications.
+* run_docker.sh script that builds the docker image and runs the flask app.
+* run_kubernetes.sh script that runs the docker hub container with kubernetes and forwards the container port to a host.
+* upload_docker.sh Script that builds, tags and uploads the docker image.
+* docker_out.txt output logs from docker execution.
+* ubernetes_out.txt output logs from kubernetes execution.
