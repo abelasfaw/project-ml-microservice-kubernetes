@@ -1,40 +1,17 @@
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/abelasfaw/project-ml-microservice-kubernetes/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/abelasfaw/project-ml-microservice-kubernetes/tree/main)
 
 ## Project Overview
-
-In this project, you will apply the skills you have acquired in this course to operationalize a Machine Learning Microservice API. 
-
-You are given a pre-trained, `sklearn` model that has been trained to predict housing prices in Boston according to several features, such as average rooms in a home and data about highway access, teacher-to-pupil ratios, and so on. You can read more about the data, which was initially taken from Kaggle, on [the data source site](https://www.kaggle.com/c/boston-housing). This project tests your ability to operationalize a Python flask app—in a provided file, `app.py`—that serves out predictions (inference) about housing prices through API calls. This project could be extended to any pre-trained machine learning model, such as those for image recognition and data labeling.
-
-### Project Tasks
-
-Your project goal is to operationalize this working, machine learning microservice using [kubernetes](https://kubernetes.io/), which is an open-source system for automating the management of containerized applications. In this project you will:
-* Test your project code using linting
-* Complete a Dockerfile to containerize this application
-* Deploy your containerized application using Docker and make a prediction
-* Improve the log statements in the source code for this application
-* Configure Kubernetes and create a Kubernetes cluster
-* Deploy a container using Kubernetes and make a prediction
-* Upload a complete Github repo with CircleCI to indicate that your code has been tested
-
-You can find a detailed [project rubric, here](https://review.udacity.com/#!/rubrics/2576/view).
-
-**The final implementation of the project will showcase your abilities to operationalize production microservices.**
-
----
+This is a flask application that has been containerized to provide predictions (inference) on housing prices through API calls. The project has the potential to be expanded to other pre-trained machine learning models, including those used for image recognition and data labeling. The application uses a pre-trained sklearn model that has been specifically trained to predict housing prices in Boston based on various features, such as the average number of rooms in a home, as well as information relating to highway access and teacher-to-pupil ratios
 
 ## Setup the Environment
-
-* Create a virtualenv with Python 3.7 and activate it. Refer to this link for help on specifying the Python version in the virtualenv. 
-```bash
-python3 -m pip install --user virtualenv
-# You should have Python 3.7 available in your host. 
-# Check the Python path using `which python3`
-# Use a command similar to this one:
-python3 -m virtualenv --python=<path-to-Python3.7> .devops
-source .devops/bin/activate
-```
-* Run `make install` to install the necessary dependencies
+* Create a virtualenv with Python3 and activate it 
+  * create environment
+    ```bash
+        python3 -m venv .{environment_name}
+  * activate environment
+        source .{environment_name}/bin/activate
+    ```
+* Run `make install` to install the necessary dependencies. all dependencies are listed in requirements.txt file
 
 ### Running `app.py`
 
@@ -45,9 +22,18 @@ source .devops/bin/activate
 ### Kubernetes Steps
 
 * Setup and Configure Docker locally
+  * Build: run the command docker build -t <dockerhub_username>/<image-tag-name> to build app locally
+  * Run: docker run -p <host_port>:<container_port> <dockerhub_username>/<image-tag-name>
+  * Test local docker: execute ./make_prediction.sh and confirm prediction
+  * Upload image: execute ./upload_docker.sh to push the image to a dockerhub account (authentication required)
 * Setup and Configure Kubernetes locally
+  * Start cluster: run the command minikube start
 * Create Flask app in Container
+  * deploy Flask app: execute ./run_kubernetes.sh. 
+  * Note: When you run the script for the first time, you may encounter issues such as the container still being created and port forwarding failing due to the           container being in a pending state. In such instances, it is recommended that you wait for a few minutes before running the script again. This will              allow sufficient time for the container to be created and for the port forwarding to be established correctly.
 * Run via kubectl
+  * Check running pods: kubectl get pods
+  * Make prediction: While the pod is running, execute .make_prediction.sh to see prediction results
 
 ### File Description
 * app.py code that is responsible for prediction.
